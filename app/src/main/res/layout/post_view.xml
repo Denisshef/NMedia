@@ -15,29 +15,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title_post_view"
+        android:id="@+id/author"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginEnd="8dp"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@id/date_view"
+        app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintEnd_toStartOf="@id/option_view"
         app:layout_constraintStart_toEndOf="@id/avatar_view"
         app:layout_constraintTop_toTopOf="@id/avatar_view"
         tools:text="Android. Самая популярная ОС для мобильных приложений" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/date_view"
+        android:id="@+id/date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@id/avatar_view"
-        app:layout_constraintEnd_toEndOf="@id/title_post_view"
-        app:layout_constraintStart_toStartOf="@id/title_post_view"
-        app:layout_constraintTop_toBottomOf="@id/title_post_view"
+        app:layout_constraintEnd_toEndOf="@id/author"
+        app:layout_constraintStart_toStartOf="@id/author"
+        app:layout_constraintTop_toBottomOf="@id/author"
         tools:text="26 апреля 21:10" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -47,21 +47,21 @@
         android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/title_post_view"
-        app:layout_constraintTop_toTopOf="@id/title_post_view" />
+        app:layout_constraintStart_toEndOf="@id/author"
+        app:layout_constraintTop_toTopOf="@id/author" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_header_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-               app:constraint_referenced_ids="avatar_view, date_view, option_view" />
+               app:constraint_referenced_ids="avatar_view, date, option_view" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/content_post_view"
+        android:id="@+id/content"
         android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_header_view"
@@ -72,66 +72,66 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content_post_view" />
+        app:constraint_referenced_ids="content" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/favorite_imageButton_view"
+        android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_16dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_baseline_favorite_border_24"
+        android:src="@drawable/ic_baseline_like_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content_post_view" />
+        app:layout_constraintTop_toBottomOf="@id/content" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/amountFavorite_view"
+        android:id="@+id/amountLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8dp"
-        app:layout_constraintBottom_toBottomOf="@id/favorite_imageButton_view"
-        app:layout_constraintStart_toEndOf="@id/favorite_imageButton_view"
-        app:layout_constraintTop_toTopOf="@id/favorite_imageButton_view"
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintStart_toEndOf="@id/like"
+        app:layout_constraintTop_toTopOf="@id/like"
         tools:text="5K" />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/share_imageButton_view"
+        android:id="@+id/share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_16dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_share_24"
-        app:layout_constraintBottom_toBottomOf="@id/favorite_imageButton_view"
-        app:layout_constraintStart_toEndOf="@id/amountFavorite_view"
-        app:layout_constraintTop_toTopOf="@id/favorite_imageButton_view" />
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintStart_toEndOf="@id/amountLike"
+        app:layout_constraintTop_toTopOf="@id/like" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/amountShare_view"
+        android:id="@+id/amountShare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8dp"
-        app:layout_constraintBottom_toBottomOf="@id/favorite_imageButton_view"
-        app:layout_constraintStart_toEndOf="@id/share_imageButton_view"
-        app:layout_constraintTop_toTopOf="@id/favorite_imageButton_view"
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintStart_toEndOf="@id/share"
+        app:layout_constraintTop_toTopOf="@id/like"
         tools:text="360" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/visibility_image_view"
+        android:id="@+id/visibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_8dp"
         android:background="@android:color/transparent"
         android:src="@drawable/ic_baseline_visibility_24"
-        app:layout_constraintBottom_toBottomOf="@id/favorite_imageButton_view"
-        app:layout_constraintEnd_toStartOf="@id/amountVisibility_view"
-        app:layout_constraintTop_toTopOf="@id/favorite_imageButton_view" />
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintEnd_toStartOf="@id/amountVisibility"
+        app:layout_constraintTop_toTopOf="@id/like" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/amountVisibility_view"
+        android:id="@+id/amountVisibility"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8dp"
-        app:layout_constraintBottom_toBottomOf="@id/favorite_imageButton_view"
+        app:layout_constraintBottom_toBottomOf="@id/like"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="48K" />
 
