@@ -2,38 +2,30 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.annotation.BoolRes
+import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import ru.netology.nmedia.databinding.PostViewBinding
+import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<PostViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = PostViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val post = Post(
-            author = "My article",
-            date = "29.04.2022",
-            content = "Very good article",
-            clickLike = false,
-            amountLike = 99999,
-            amountShare = 999999,
-            amountVisibility = 11563000
-        )
-
-        binding.render(post)
-
-        binding.like.setOnClickListener {
-            binding.like.setImageResource(clickedLike(post))
+        viewModel.data.observe(this) { post ->
             binding.render(post)
         }
 
+        binding.like.setOnClickListener {
+            viewModel.clickLikedPost()
+        }
+
         binding.share.setOnClickListener {
-            post.amountShare++
-            binding.render(post)
+            viewModel.clickSharePost()
         }
     }
 
@@ -41,22 +33,16 @@ class MainActivity : AppCompatActivity() {
         author.text = post.author
         date.text = post.date
         content.text = post.content
+        like.setImageResource(setImageResource(post.clickLike))
         amountLike.text = displayAmountIntToString(post.amountLike)
         amountShare.text = displayAmountIntToString(post.amountShare)
         amountVisibility.text = displayAmountIntToString(post.amountVisibility)
     }
 
     @DrawableRes
-    private fun clickedLike(post: Post): Int {
-        post.clickLike = !post.clickLike
-        return if (post.clickLike) {
-            post.amountLike++
-            R.drawable.ic_baseline_liked_24
-        } else {
-            post.amountLike--
-            R.drawable.ic_baseline_like_24
-        }
-    }
+    private fun setImageResource(clickLike: Boolean) =
+        if (clickLike) R.drawable.ic_baseline_liked_24 else R.drawable.ic_baseline_like_24
+
 
     private fun displayAmountIntToString(i: Int): String {
         val str = i.toString()

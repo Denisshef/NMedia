@@ -1,11 +1,11 @@
 package ru.netology.nmedia
 
-class Post(
+data class Post(
     val author: String,
     val date: String,
     val content: String,
-    var amountLike: Int,
-    var amountShare: Int,
-    var amountVisibility: Int,
-    var clickLike: Boolean = false
+    val amountLike: Int,
+    val amountShare: Int,
+    val amountVisibility: Int,
+    val clickLike: Boolean = false
 )
