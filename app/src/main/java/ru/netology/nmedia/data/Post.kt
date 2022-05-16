@@ -1,6 +1,7 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.data
 
 data class Post(
+    val id: Int,
     val author: String,
     val date: String,
     val content: String,
