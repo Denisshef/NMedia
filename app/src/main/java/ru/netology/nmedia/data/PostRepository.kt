@@ -8,4 +8,9 @@ interface PostRepository {
     fun like(postId: Int)
     fun shareClicked(postId: Int)
     fun delete(postId: Int)
+    fun save(post: Post)
+
+    companion object{
+        const val  NEW_POST_ID = 0
+    }
 }

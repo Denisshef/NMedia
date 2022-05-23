@@ -2,4 +2,6 @@
 <resources>
     <string name="hello_text">Добро пожаловать в NMedia!</string>
     <string name="remove">Удалить</string>
+    <string name="add_post">Добавить пост</string>
+    <string name="edit">Изменить</string>
 </resources>

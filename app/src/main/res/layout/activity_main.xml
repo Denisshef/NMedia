@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,9 +10,30 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postsContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/contentEditText"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/post_view" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/contentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/add_post"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/saveButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/add_file_24"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="@id/contentEditText"
+        app:layout_constraintEnd_toEndOf="@id/contentEditText"
+        app:layout_constraintTop_toTopOf="@id/contentEditText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
