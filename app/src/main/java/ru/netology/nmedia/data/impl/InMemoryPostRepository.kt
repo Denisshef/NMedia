@@ -26,7 +26,7 @@ class InMemoryPostRepository : PostRepository {
         }
     )
 
-    override fun liked(postId: Int) {
+    override fun like(postId: Int) {
         data.value = posts.map {
             if (it.id == postId) {
                 if (it.clickLike)
@@ -42,5 +42,9 @@ class InMemoryPostRepository : PostRepository {
             if (it.id == postId) it.copy(amountShare = it.amountShare + 1)
             else it
         }
+    }
+
+    override fun delete(postId: Int) {
+        data.value = posts.filterNot { it.id == postId }
     }
 }

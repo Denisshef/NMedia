@@ -1,5 +1,7 @@
-package ru.netology.nmedia.data.impl
+package ru.netology.nmedia.adapter
 
+import android.os.Parcel
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -11,38 +13,54 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.data.App
 import ru.netology.nmedia.databinding.PostViewBinding
 
+typealias OnPostLikeClicked = (Post) -> Unit
+
 internal class PostsAdapter(
-    private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit
+    private val onLikeClicked: OnPostLikeClicked,
+    private val onShareClicked: OnPostLikeClicked
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffPosts) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val binding = PostViewBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(
+            binding,
+            onLikeClicked,
+            onShareClicked
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(
-        private val binding: PostViewBinding
+    class ViewHolder(
+        private val binding: PostViewBinding,
+        onLikeClicked: OnPostLikeClicked,
+        onShareClicked: OnPostLikeClicked
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Post) = with(binding) {
-            author.text = post.author
-            date.text = post.date
-            content.text = post.content
-            like.setImageResource(setImageResource(post.clickLike))
-            amountLike.text = displayAmountIntToString(post.amountLike)
-            amountShare.text = displayAmountIntToString(post.amountShare)
-            amountVisibility.text = displayAmountIntToString(post.amountVisibility)
-            like.setOnClickListener { onLikeClicked(post) }
-            share.setOnClickListener { onShareClicked(post) }
+        private lateinit var post: Post
+
+        init {
+            binding.like.setOnClickListener { onLikeClicked(post) }
+            binding.share.setOnClickListener { onShareClicked(post) }
         }
 
+        fun bind(post: Post) {
+            this.post = post
+
+            with(binding) {
+                author.text = post.author
+                date.text = post.date
+                content.text = post.content
+                like.setImageResource(setImageResource(post.clickLike))
+                amountLike.text = displayAmountIntToString(post.amountLike)
+                amountShare.text = displayAmountIntToString(post.amountShare)
+                amountVisibility.text = displayAmountIntToString(post.amountVisibility)
+            }
+        }
 
         @DrawableRes
         private fun setImageResource(clickLike: Boolean) =
