@@ -11,6 +11,7 @@ import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.data.App
 import ru.netology.nmedia.databinding.PostViewBinding
+import ru.netology.nmedia.databinding.ActivityMainBinding
 
 internal class PostsAdapter(
     private val interactionListener: PostInteractionListener
@@ -33,7 +34,7 @@ internal class PostsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var post: Post
-        private val popupMenu by lazy {
+        private val popupMenu =
             PopupMenu(itemView.context, binding.optionView).apply {
                 inflate(R.menu.option_post)
                 setOnMenuItemClickListener { menuItem ->
@@ -50,7 +51,7 @@ internal class PostsAdapter(
                     }
                 }
             }
-        }
+
 
         init {
             binding.like.setOnClickListener { listener.onLikeClicked(post) }

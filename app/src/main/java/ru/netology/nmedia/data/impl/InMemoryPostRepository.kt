@@ -1,5 +1,6 @@
 package ru.netology.nmedia.data.impl
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.data.PostRepository
@@ -62,11 +63,12 @@ class InMemoryPostRepository : PostRepository {
 
     private fun update(post: Post) {
         data.value = posts.map {
-            if(it.id == post.id) post else it
+            if (it.id == post.id) post else it
+
         }
     }
 
     companion object {
-        const val GENERATED_POSTS_AMOUNT = 10
+        const val GENERATED_POSTS_AMOUNT = 1
     }
 }

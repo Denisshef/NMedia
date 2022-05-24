@@ -4,4 +4,5 @@
     <string name="remove">Удалить</string>
     <string name="add_post">Добавить пост</string>
     <string name="edit">Изменить</string>
+    <string name="edit_message">Изменить сообщение</string>
 </resources>
