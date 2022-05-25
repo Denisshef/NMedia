@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cancelEdit.setOnClickListener {
+            viewModel.onCancelEdit()
             binding.groupCancelEdit.visibility = View.GONE
             binding.contentEditText.text?.clear()
         }

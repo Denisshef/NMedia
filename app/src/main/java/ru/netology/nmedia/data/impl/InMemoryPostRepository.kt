@@ -69,6 +69,6 @@ class InMemoryPostRepository : PostRepository {
     }
 
     companion object {
-        const val GENERATED_POSTS_AMOUNT = 1
+        const val GENERATED_POSTS_AMOUNT = 2
     }
 }
