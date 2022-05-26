@@ -1,7 +1,8 @@
-package ru.netology.nmedia.data.impl
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,39 +11,67 @@ import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.data.App
 import ru.netology.nmedia.databinding.PostViewBinding
+import ru.netology.nmedia.databinding.ActivityMainBinding
 
 internal class PostsAdapter(
-    private val onLikeClicked: (Post) -> Unit,
-    private val onShareClicked: (Post) -> Unit
+    private val interactionListener: PostInteractionListener
 ) : ListAdapter<Post, PostsAdapter.ViewHolder>(DiffPosts) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val context = parent.context
         val inflater = LayoutInflater.from(context)
         val binding = PostViewBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding)
+        return ViewHolder(binding, interactionListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class ViewHolder(
-        private val binding: PostViewBinding
+    class ViewHolder(
+        private val binding: PostViewBinding,
+        listener: PostInteractionListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(post: Post) = with(binding) {
-            author.text = post.author
-            date.text = post.date
-            content.text = post.content
-            like.setImageResource(setImageResource(post.clickLike))
-            amountLike.text = displayAmountIntToString(post.amountLike)
-            amountShare.text = displayAmountIntToString(post.amountShare)
-            amountVisibility.text = displayAmountIntToString(post.amountVisibility)
-            like.setOnClickListener { onLikeClicked(post) }
-            share.setOnClickListener { onShareClicked(post) }
+        private lateinit var post: Post
+        private val popupMenu =
+            PopupMenu(itemView.context, binding.optionView).apply {
+                inflate(R.menu.option_post)
+                setOnMenuItemClickListener { menuItem ->
+                    when (menuItem.itemId) {
+                        R.id.remove -> {
+                            listener.onDeleteClicked(post)
+                            true
+                        }
+                        R.id.edit -> {
+                            listener.onEditClicked(post)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            }
+
+
+        init {
+            binding.like.setOnClickListener { listener.onLikeClicked(post) }
+            binding.share.setOnClickListener { listener.onShareClicked(post) }
         }
 
+        fun bind(post: Post) {
+            this.post = post
+
+            with(binding) {
+                author.text = post.author
+                date.text = post.date
+                content.text = post.content
+                like.setImageResource(setImageResource(post.clickLike))
+                amountLike.text = displayAmountIntToString(post.amountLike)
+                amountShare.text = displayAmountIntToString(post.amountShare)
+                amountVisibility.text = displayAmountIntToString(post.amountVisibility)
+                optionView.setOnClickListener { popupMenu.show() }
+            }
+        }
 
         @DrawableRes
         private fun setImageResource(clickLike: Boolean) =

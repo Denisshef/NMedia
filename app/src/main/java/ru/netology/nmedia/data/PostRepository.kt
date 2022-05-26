@@ -5,8 +5,12 @@ import androidx.lifecycle.LiveData
 interface PostRepository {
 
     val data: LiveData<List<Post>>
-
-    fun liked(postId: Int)
-
+    fun like(postId: Int)
     fun shareClicked(postId: Int)
+    fun delete(postId: Int)
+    fun save(post: Post)
+
+    companion object{
+        const val  NEW_POST_ID = 0
+    }
 }

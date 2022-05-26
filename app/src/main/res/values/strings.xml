@@ -3,4 +3,8 @@
     <string name="hello_text">Welcome to NMedia!</string>
     <string name="kilo" translatable="false">K</string>
     <string name="million" translatable="false">M</string>
+    <string name="remove">Remove</string>
+    <string name="add_post">Add post</string>
+    <string name="edit">Edit</string>
+    <string name="edit_message">Edit Message</string>
 </resources>

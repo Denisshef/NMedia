@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-               app:constraint_referenced_ids="avatar_view, date, option_view" />
+        app:constraint_referenced_ids="avatar_view, date, option_view" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/content"
