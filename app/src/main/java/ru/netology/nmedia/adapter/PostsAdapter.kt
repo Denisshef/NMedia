@@ -3,7 +3,6 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,7 +10,6 @@ import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.data.App
 import ru.netology.nmedia.databinding.PostViewBinding
-import ru.netology.nmedia.databinding.ActivityMainBinding
 
 internal class PostsAdapter(
     private val interactionListener: PostInteractionListener
@@ -52,10 +50,10 @@ internal class PostsAdapter(
                 }
             }
 
-
         init {
             binding.like.setOnClickListener { listener.onLikeClicked(post) }
             binding.share.setOnClickListener { listener.onShareClicked(post) }
+            binding.optionView.setOnClickListener { popupMenu.show() }
         }
 
         fun bind(post: Post) {
@@ -65,17 +63,12 @@ internal class PostsAdapter(
                 author.text = post.author
                 date.text = post.date
                 content.text = post.content
-                like.setImageResource(setImageResource(post.clickLike))
-                amountLike.text = displayAmountIntToString(post.amountLike)
-                amountShare.text = displayAmountIntToString(post.amountShare)
-                amountVisibility.text = displayAmountIntToString(post.amountVisibility)
-                optionView.setOnClickListener { popupMenu.show() }
+                like.isCheckable = post.clickLike
+                like.text = displayAmountIntToString(post.amountLike)
+                share.text = displayAmountIntToString(post.amountShare)
+                visibility.text = displayAmountIntToString(post.amountVisibility)
             }
         }
-
-        @DrawableRes
-        private fun setImageResource(clickLike: Boolean) =
-            if (clickLike) R.drawable.ic_baseline_liked_24 else R.drawable.ic_baseline_like_24
 
         private fun displayAmountIntToString(i: Int): String {
             val str = i.toString()
