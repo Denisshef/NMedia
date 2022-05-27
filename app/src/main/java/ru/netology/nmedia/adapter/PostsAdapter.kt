@@ -63,7 +63,7 @@ internal class PostsAdapter(
                 author.text = post.author
                 date.text = post.date
                 content.text = post.content
-                like.isCheckable = post.clickLike
+                like.isChecked = post.clickLike
                 like.text = displayAmountIntToString(post.amountLike)
                 share.text = displayAmountIntToString(post.amountShare)
                 visibility.text = displayAmountIntToString(post.amountVisibility)
