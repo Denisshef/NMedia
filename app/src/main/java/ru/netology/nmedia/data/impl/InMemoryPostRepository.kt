@@ -1,6 +1,5 @@
 package ru.netology.nmedia.data.impl
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.data.PostRepository
@@ -22,9 +21,9 @@ class InMemoryPostRepository : PostRepository {
                 date = "29.04.2022",
                 content = "Content (post id = ${index + 1})",
                 clickLike = false,
-                amountLike = 99999,
-                amountShare = 999999,
-                amountVisibility = 11563000
+                amountLike = 0,
+                amountShare = 0,
+                amountVisibility = 0
             )
         }
     )

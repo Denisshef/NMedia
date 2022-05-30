@@ -1,6 +1,5 @@
 package ru.netology.nmedia.viewModel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ru.netology.nmedia.adapter.PostInteractionListener
@@ -41,7 +40,6 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onDeleteClicked(post: Post) = repository.delete(post.id)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-
     }
 
     override fun onCancelEdit() {
