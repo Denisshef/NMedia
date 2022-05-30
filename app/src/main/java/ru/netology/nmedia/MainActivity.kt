@@ -3,6 +3,7 @@ package ru.netology.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -25,26 +26,32 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-        binding.saveButton.setOnClickListener {
-            viewModel.onSaveButtonClicked(binding.contentEditText.text.toString())
-
-            binding.contentEditText.clearFocus()
-            binding.contentEditText.hideKeyboard()
-            binding.groupCancelEdit.visibility = View.GONE
+        binding.fag.setOnClickListener {
+            viewModel.onAddClicked()
         }
 
-        binding.cancelEdit.setOnClickListener {
-            viewModel.onCancelEdit()
-            binding.groupCancelEdit.visibility = View.GONE
-            binding.contentEditText.text?.clear()
+        val postContentActivityLauncher = registerForActivityResult(
+            PostContentActivity.ResultContract
+        ) { postContent ->
+            postContent ?: return@registerForActivityResult
+            viewModel.onSaveButtonClicked(postContent)
+        }
+        viewModel.navigateToPostContentScreenEvent.observe(this) {
+            postContentActivityLauncher.launch()
         }
 
-        viewModel.currentPost.observe(this) { currentPost ->
-            binding.contentEditText.setText(currentPost?.content)
-            if (currentPost != null) {
-                binding.groupCancelEdit.visibility = View.VISIBLE
-                binding.editMessage.text = currentPost.author
-            }
-        }
+//        binding.cancelEdit.setOnClickListener {
+//            viewModel.onCancelEdit()
+//            binding.groupCancelEdit.visibility = View.GONE
+//            binding.contentEditText.text?.clear()
+//        }
+
+//        viewModel.currentPost.observe(this) { currentPost ->
+//            binding.contentEditText.setText(currentPost?.content)
+//            if (currentPost != null) {
+//                binding.groupCancelEdit.visibility = View.VISIBLE
+//                binding.editMessage.text = currentPost.author
+//            }
+//        }
     }
 }

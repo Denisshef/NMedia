@@ -2,6 +2,7 @@ package ru.netology.nmedia.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.myapp.SingleLiveEvent
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.data.PostRepository
@@ -13,7 +14,8 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val data by repository::data
 
-    val currentPost = MutableLiveData<Post?>(null)
+    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
@@ -31,6 +33,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         )
         repository.save(post)
         currentPost.value = null
+    }
+
+    fun onAddClicked() {
+        navigateToPostContentScreenEvent.call()
     }
 
     // region PostInteractionListener
