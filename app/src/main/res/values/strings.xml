@@ -6,5 +6,7 @@
     <string name="remove">Remove</string>
     <string name="add_post">Add post</string>
     <string name="edit">Edit</string>
-    <string name="edit_message">Edit Message</string>
+    <string name="cancel_edit_message">Cancel edit</string>
+    <string name="new_edit_post">new edit post</string>
+    <string name="hint_new_edit_post">Enter content post</string>
 </resources>
