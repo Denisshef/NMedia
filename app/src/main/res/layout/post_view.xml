@@ -57,6 +57,34 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="avatar_view, date, option_view" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="videoContent, buttonPlayVideo" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/videoContent"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:background="@color/purple_200"
+        android:src="@drawable/placeholder_video"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/content"
+        app:layout_constraintTop_toBottomOf="@id/barrier_header_view" />
+
+    <androidx.constraintlayout.utils.widget.ImageFilterButton
+        android:id="@+id/buttonPlayVideo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@android:drawable/ic_media_play"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/videoContent"
+        app:layout_constraintEnd_toEndOf="@id/videoContent"
+        app:layout_constraintStart_toStartOf="@id/videoContent"
+        app:layout_constraintTop_toTopOf="@id/videoContent" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
@@ -64,7 +92,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barrier_header_view"
+        app:layout_constraintTop_toBottomOf="@id/videoContent"
         tools:text="text" />
 
     <androidx.constraintlayout.widget.Barrier

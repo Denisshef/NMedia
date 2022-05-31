@@ -17,9 +17,10 @@ class InMemoryPostRepository : PostRepository {
         List(GENERATED_POSTS_AMOUNT) { index ->
             Post(
                 id = index + 1,
-                author = "My article",
-                date = "29.04.2022",
-                content = "Content (post id = ${index + 1})",
+                author = "Планета хищников",
+                date = "31.05.2022",
+                video = "https://youtu.be/GH7wSuaK2Kw",
+                content = "Докуентальный фильм о четырех самых опасных хищниках планеты (id = ${index + 1})",
                 clickLike = false,
                 amountLike = 0,
                 amountShare = 0,

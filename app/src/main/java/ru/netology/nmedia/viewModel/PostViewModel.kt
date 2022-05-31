@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewModel
 
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.activity.result.launch
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     val data by repository::data
 
     val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val playVideoPost = MutableLiveData<Post?>(null)
     val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
@@ -27,8 +29,8 @@ class PostViewModel : ViewModel(), PostInteractionListener {
             content = content
         ) ?: Post(
             id = PostRepository.NEW_POST_ID,
-            author = "New post",
-            date = "23.05.2022",
+            author = "Планета хищников",
+            date = "31.05.2022",
             content = content,
             clickLike = false,
             amountLike = 0,
@@ -51,6 +53,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onEditClicked(post: Post) {
         currentPost.value = post
         navigateToPostContentScreenEvent.call()
+    }
+
+    override fun onPlayVideo(post: Post) {
+        playVideoPost.value = post
     }
     // endregion PostInteractionListener
 }
