@@ -2,6 +2,7 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.launch
 import androidx.activity.viewModels
@@ -33,25 +34,15 @@ class MainActivity : AppCompatActivity() {
         val postContentActivityLauncher = registerForActivityResult(
             PostContentActivity.ResultContract
         ) { postContent ->
-            postContent ?: return@registerForActivityResult
+            if (postContent == null) {
+                viewModel.currentPost.value = null
+                return@registerForActivityResult
+            }
             viewModel.onSaveButtonClicked(postContent)
         }
+
         viewModel.navigateToPostContentScreenEvent.observe(this) {
-            postContentActivityLauncher.launch()
+            postContentActivityLauncher.launch(viewModel.currentPost.value?.content)
         }
-
-//        binding.cancelEdit.setOnClickListener {
-//            viewModel.onCancelEdit()
-//            binding.groupCancelEdit.visibility = View.GONE
-//            binding.contentEditText.text?.clear()
-//        }
-
-//        viewModel.currentPost.observe(this) { currentPost ->
-//            binding.contentEditText.setText(currentPost?.content)
-//            if (currentPost != null) {
-//                binding.groupCancelEdit.visibility = View.VISIBLE
-//                binding.editMessage.text = currentPost.author
-//            }
-//        }
     }
 }
