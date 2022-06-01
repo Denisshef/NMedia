@@ -1,8 +1,12 @@
 package ru.netology.nmedia
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.activity.result.launch
 import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -25,26 +29,28 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
-        binding.saveButton.setOnClickListener {
-            viewModel.onSaveButtonClicked(binding.contentEditText.text.toString())
-
-            binding.contentEditText.clearFocus()
-            binding.contentEditText.hideKeyboard()
-            binding.groupCancelEdit.visibility = View.GONE
+        binding.fag.setOnClickListener {
+            viewModel.onAddClicked()
         }
 
-        binding.cancelEdit.setOnClickListener {
-            viewModel.onCancelEdit()
-            binding.groupCancelEdit.visibility = View.GONE
-            binding.contentEditText.text?.clear()
-        }
-
-        viewModel.currentPost.observe(this) { currentPost ->
-            binding.contentEditText.setText(currentPost?.content)
-            if (currentPost != null) {
-                binding.groupCancelEdit.visibility = View.VISIBLE
-                binding.editMessage.text = currentPost.author
+        val postContentActivityLauncher = registerForActivityResult(
+            PostContentActivity.ResultContract
+        ) { postContent ->
+            if (postContent == null) {
+                viewModel.currentPost.value = null
+                return@registerForActivityResult
             }
+            viewModel.onSaveButtonClicked(postContent)
+        }
+
+        viewModel.navigateToPostContentScreenEvent.observe(this) {
+            postContentActivityLauncher.launch(viewModel.currentPost.value?.content)
+        }
+
+        viewModel.playVideoPost.observe(this) {
+            val playVideo = viewModel.playVideoPost.value?.video ?: return@observe
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(playVideo))
+            startActivity(intent)
         }
     }
 }
