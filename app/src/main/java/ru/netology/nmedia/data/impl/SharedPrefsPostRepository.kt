@@ -88,6 +88,6 @@ class SharedPrefsPostRepository(
 
     companion object {
         const val POSTS_PREFS_KEY = "posts"
-        const val NEXT_ID_PREFS_KEY = "posts"
+        const val NEXT_ID_PREFS_KEY = "idPost"
     }
 }

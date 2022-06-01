@@ -33,7 +33,7 @@ class PostViewModel(
             content = content
         ) ?: Post(
             id = PostRepository.NEW_POST_ID,
-            author = "Планета хищников",
+            author = "Планета хищников (id=${currentPost.value?.id}",
             date = "31.05.2022",
             content = content,
             clickLike = false,
