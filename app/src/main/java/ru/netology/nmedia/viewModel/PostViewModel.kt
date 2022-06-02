@@ -1,15 +1,9 @@
 package ru.netology.nmedia.viewModel
 
 import android.app.Application
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
-import androidx.activity.result.launch
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.myapp.SingleLiveEvent
-import ru.netology.nmedia.PostContentActivity
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.data.PostRepository

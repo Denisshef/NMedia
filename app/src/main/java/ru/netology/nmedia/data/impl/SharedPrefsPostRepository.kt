@@ -18,6 +18,7 @@ class SharedPrefsPostRepository(
     private val pref = application.getSharedPreferences(
         "repo", Context.MODE_PRIVATE
     )
+
     private var nextId: Int by Delegates.observable(
         pref.getInt(NEXT_ID_PREFS_KEY, 0)
     ) { _, _, newValue ->

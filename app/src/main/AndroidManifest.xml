@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NMedia">
         <activity
-            android:name=".PostContentActivity"
+            android:name=".ui.PostContentActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.AppActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
