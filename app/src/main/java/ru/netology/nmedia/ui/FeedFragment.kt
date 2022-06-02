@@ -2,14 +2,14 @@ package ru.netology.nmedia.ui
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.viewModel.PostViewModel
@@ -21,18 +21,20 @@ class FeedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val postContentActivityLauncher = registerForActivityResult(
-            PostContentActivity.ResultContract
-        ) { postContent ->
-            if (postContent == null) {
-                viewModel.currentPost.value = null
-                return@registerForActivityResult
-            }
-            viewModel.onSaveButtonClicked(postContent)
+        setFragmentResultListener(
+            requestKey = PostContentFragment.REQUEST_KEY
+        ) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
+            val newPostContent = bundle.getString(PostContentFragment.REQUEST_KEY)
+                ?: return@setFragmentResultListener
+            viewModel.onSaveButtonClicked(newPostContent)
         }
 
-        viewModel.navigateToPostContentScreenEvent.observe(this) {
-            postContentActivityLauncher.launch(viewModel.currentPost.value?.content)
+        viewModel.navigateToPostContentScreenEvent.observe(this) {initialContent ->
+            parentFragmentManager.commit {
+                replace(R.id.fragmentContainer, PostContentFragment.postContentByFragment(initialContent))
+                addToBackStack(null)
+            }
         }
 
         viewModel.playVideoPost.observe(this) {

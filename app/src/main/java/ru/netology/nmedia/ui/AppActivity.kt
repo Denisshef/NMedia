@@ -2,6 +2,7 @@ package ru.netology.nmedia.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.AppActivityBinding
 
@@ -13,9 +14,8 @@ class AppActivity: AppCompatActivity() {
         val binding = AppActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainer, FeedFragment())
-            .commit()
+        supportFragmentManager.commit {
+            add(R.id.fragmentContainer, FeedFragment())
+        }
     }
-
 }

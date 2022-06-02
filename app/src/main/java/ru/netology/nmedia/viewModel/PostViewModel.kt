@@ -17,7 +17,7 @@ class PostViewModel(
 
     val data by repository::data
 
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
     val playVideoPost = MutableLiveData<Post?>(null)
     val currentPost = MutableLiveData<Post?>(null)
 
@@ -27,7 +27,7 @@ class PostViewModel(
             content = content
         ) ?: Post(
             id = PostRepository.NEW_POST_ID,
-            author = "Планета хищников",
+            author = "Планета хищников (id=${currentPost.value?.id}",
             date = "31.05.2022",
             content = content,
             clickLike = false,
@@ -50,7 +50,7 @@ class PostViewModel(
     override fun onDeleteClicked(post: Post) = repository.delete(post.id)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentScreenEvent.call()
+        navigateToPostContentScreenEvent.value = post.content
     }
 
     override fun onPlayVideo(post: Post) {
