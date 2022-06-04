@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.myapp.SingleLiveEvent
@@ -18,6 +19,7 @@ class PostViewModel(
     val data by repository::data
 
     val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+    val navigateToSinglePostShow = MutableLiveData<Post>()
     val playVideoPost = MutableLiveData<Post?>(null)
     val currentPost = MutableLiveData<Post?>(null)
 
@@ -45,7 +47,10 @@ class PostViewModel(
 
     // region PostInteractionListener
 
-    override fun onLikeClicked(post: Post) = repository.like(post.id)
+    override fun onLikeClicked(post: Post) {
+        repository.like(post.id)
+    }
+
     override fun onShareClicked(post: Post) = repository.shareClicked(post.id)
     override fun onDeleteClicked(post: Post) = repository.delete(post.id)
     override fun onEditClicked(post: Post) {
@@ -56,5 +61,10 @@ class PostViewModel(
     override fun onPlayVideo(post: Post) {
         playVideoPost.value = post
     }
+
+    override fun onSinglePost(post: Post) {
+        navigateToSinglePostShow.value = post
+    }
+
     // endregion PostInteractionListener
 }

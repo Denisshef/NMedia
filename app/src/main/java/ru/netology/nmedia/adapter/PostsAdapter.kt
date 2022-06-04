@@ -56,6 +56,7 @@ internal class PostsAdapter(
             binding.share.setOnClickListener { listener.onShareClicked(post) }
             binding.videoContent.setOnClickListener { listener.onPlayVideo(post) }
             binding.buttonPlayVideo.setOnClickListener { listener.onPlayVideo(post) }
+            binding.avatar.setOnClickListener { listener.onSinglePost(post) }
             binding.optionView.setOnClickListener { popupMenu.show() }
         }
 

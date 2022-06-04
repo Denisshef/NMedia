@@ -3,6 +3,7 @@ package ru.netology.nmedia.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -32,6 +33,10 @@ class FeedFragment : Fragment() {
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
             val directions = FeedFragmentDirections.toPostContentFragment(initialContent)
             findNavController().navigate(directions)
+        }
+
+        viewModel.navigateToSinglePostShow.observe(this){
+            findNavController().navigate(FeedFragmentDirections.toSinglePostFragment())
         }
 
         viewModel.playVideoPost.observe(this) {

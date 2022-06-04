@@ -12,16 +12,24 @@
         <action
             android:id="@+id/toPostContentFragment"
             app:destination="@id/postContentFragment" />
+        <action
+            android:id="@+id/toSinglePostFragment"
+            app:destination="@id/singlePostFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/postContentFragment"
         android:name="ru.netology.nmedia.ui.PostContentFragment"
-        android:label="post_content_fragment"
         tools:layout="@layout/post_content_fragment">
         <argument
             android:name="initialContent"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/singlePostFragment"
+        android:name="ru.netology.nmedia.ui.SinglePostFragment" >
     </fragment>
 
 </navigation>
