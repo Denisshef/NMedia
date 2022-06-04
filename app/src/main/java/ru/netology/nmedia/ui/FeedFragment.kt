@@ -6,12 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import ru.netology.nmedia.R
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.adapter.PostsAdapter
-import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.databinding.FeedFragmentBinding
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
@@ -30,11 +29,9 @@ class FeedFragment : Fragment() {
             viewModel.onSaveButtonClicked(newPostContent)
         }
 
-        viewModel.navigateToPostContentScreenEvent.observe(this) {initialContent ->
-            parentFragmentManager.commit {
-                replace(R.id.fragmentContainer, PostContentFragment.postContentByFragment(initialContent))
-                addToBackStack(null)
-            }
+        viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
+            val directions = FeedFragmentDirections.toPostContentFragment(initialContent)
+            findNavController().navigate(directions)
         }
 
         viewModel.playVideoPost.observe(this) {
@@ -48,7 +45,7 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = ActivityMainBinding.inflate(layoutInflater, container, false).also { binding ->
+    ) = FeedFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
         val adapter = PostsAdapter(viewModel)
 
         binding.postsContainer.adapter = adapter
@@ -60,4 +57,8 @@ class FeedFragment : Fragment() {
             viewModel.onAddClicked()
         }
     }.root
+
+    companion object {
+        const val TAG = "FeedFragment"
+    }
 }
