@@ -30,6 +30,17 @@
     <fragment
         android:id="@+id/singlePostFragment"
         android:name="ru.netology.nmedia.ui.SinglePostFragment" >
+        <argument
+            android:name="singlePost"
+            app:argType="integer" />
+        <action
+            android:id="@+id/toSinglePostContentFragment"
+            app:destination="@id/postContentFragment" />
+        <argument
+            android:name="contentSinglePost"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
     </fragment>
 
 </navigation>

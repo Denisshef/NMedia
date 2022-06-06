@@ -3,13 +3,16 @@ package ru.netology.nmedia.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.Contacts.SettingsColumns.KEY
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ListAdapter
+import kotlinx.serialization.descriptors.StructureKind
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FeedFragmentBinding
 import ru.netology.nmedia.viewModel.PostViewModel
@@ -30,13 +33,21 @@ class FeedFragment : Fragment() {
             viewModel.onSaveButtonClicked(newPostContent)
         }
 
+        setFragmentResultListener(
+            requestKey = SinglePostFragment.KEY
+        ){requestKey, bundle ->
+            if(requestKey == SinglePostFragment.KEY){
+               // adapter.submitList(viewModel.data.value)
+            }
+        }
+
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
             val directions = FeedFragmentDirections.toPostContentFragment(initialContent)
             findNavController().navigate(directions)
         }
 
-        viewModel.navigateToSinglePostShow.observe(this){
-            findNavController().navigate(FeedFragmentDirections.toSinglePostFragment())
+        viewModel.navigateToSinglePostShow.observe(this) { singlePost ->
+            findNavController().navigate(FeedFragmentDirections.toSinglePostFragment(singlePost.id))
         }
 
         viewModel.playVideoPost.observe(this) {
@@ -51,8 +62,8 @@ class FeedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = FeedFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        val adapter = PostsAdapter(viewModel)
 
+        val adapter = PostsAdapter(viewModel)
         binding.postsContainer.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
@@ -62,8 +73,4 @@ class FeedFragment : Fragment() {
             viewModel.onAddClicked()
         }
     }.root
-
-    companion object {
-        const val TAG = "FeedFragment"
-    }
 }

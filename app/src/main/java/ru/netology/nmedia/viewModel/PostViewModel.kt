@@ -19,9 +19,9 @@ class PostViewModel(
     val data by repository::data
 
     val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
-    val navigateToSinglePostShow = MutableLiveData<Post>()
+    val navigateToSinglePostShow = SingleLiveEvent<Post>()
     val playVideoPost = MutableLiveData<Post?>(null)
-    val currentPost = MutableLiveData<Post?>(null)
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
@@ -45,14 +45,16 @@ class PostViewModel(
         navigateToPostContentScreenEvent.call()
     }
 
+    fun getPost(postId: Int) = repository.getPost(postId)
+
     // region PostInteractionListener
 
-    override fun onLikeClicked(post: Post) {
-        repository.like(post.id)
+    override fun onLikeClicked(postId: Int) {
+        repository.like(postId)
     }
 
-    override fun onShareClicked(post: Post) = repository.shareClicked(post.id)
-    override fun onDeleteClicked(post: Post) = repository.delete(post.id)
+    override fun onShareClicked(postId: Int) = repository.shareClicked(postId)
+    override fun onDeleteClicked(postId: Int) = repository.delete(postId)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
         navigateToPostContentScreenEvent.value = post.content

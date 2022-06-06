@@ -9,7 +9,7 @@ interface PostRepository {
     fun shareClicked(postId: Int)
     fun delete(postId: Int)
     fun save(post: Post)
-    //fun singlePost(post: Post)
+    fun getPost(postId: Int): Post?
 
 
     companion object{

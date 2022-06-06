@@ -87,6 +87,13 @@ class SharedPrefsPostRepository(
         }
     }
 
+    override fun getPost(postId: Int): Post? {
+        for (item: Post in posts) {
+            if (item.id == postId) return item
+        }
+        return null
+    }
+
     companion object {
         const val POSTS_PREFS_KEY = "posts"
         const val NEXT_ID_PREFS_KEY = "idPost"
