@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Contacts.SettingsColumns.KEY
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -33,21 +34,18 @@ class FeedFragment : Fragment() {
             viewModel.onSaveButtonClicked(newPostContent)
         }
 
-        setFragmentResultListener(
-            requestKey = SinglePostFragment.KEY
-        ){requestKey, bundle ->
-            if(requestKey == SinglePostFragment.KEY){
-               // adapter.submitList(viewModel.data.value)
-            }
-        }
-
         viewModel.navigateToPostContentScreenEvent.observe(this) { initialContent ->
             val directions = FeedFragmentDirections.toPostContentFragment(initialContent)
             findNavController().navigate(directions)
         }
 
         viewModel.navigateToSinglePostShow.observe(this) { singlePost ->
-            findNavController().navigate(FeedFragmentDirections.toSinglePostFragment(singlePost.id))
+            findNavController().navigate(
+                FeedFragmentDirections.toSinglePostFragment(
+                    singlePost.id,
+                    singlePost.content
+                )
+            )
         }
 
         viewModel.playVideoPost.observe(this) {
@@ -65,8 +63,10 @@ class FeedFragment : Fragment() {
 
         val adapter = PostsAdapter(viewModel)
         binding.postsContainer.adapter = adapter
+
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
+            Log.d("myLog", "Call -> data.observe")
         }
 
         binding.fag.setOnClickListener {
