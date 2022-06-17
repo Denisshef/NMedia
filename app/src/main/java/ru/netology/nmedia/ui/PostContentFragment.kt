@@ -13,13 +13,18 @@ import ru.netology.nmedia.databinding.PostContentFragmentBinding
 class PostContentFragment : Fragment() {
 
     private val args by navArgs<PostContentFragmentArgs>()
+    private val argsSingle by navArgs<SinglePostFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = PostContentFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        binding.edit.setText(args.initialContent)
+        if (args.initialContent != null) {
+            binding.edit.setText(args.initialContent)
+        } else {
+            binding.edit.setText(argsSingle.contentSinglePost)
+        }
         binding.edit.requestFocus()
         binding.ok.setOnClickListener {
             val text = binding.edit.text

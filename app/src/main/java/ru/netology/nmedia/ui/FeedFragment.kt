@@ -47,7 +47,7 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.navigateToSinglePostShow.observe(this) { singlePost ->
-            findNavController().navigate(FeedFragmentDirections.toSinglePostFragment(singlePost.id))
+            findNavController().navigate(FeedFragmentDirections.toSinglePostFragment(singlePost.id, singlePost.content))
         }
 
         viewModel.playVideoPost.observe(this) {
