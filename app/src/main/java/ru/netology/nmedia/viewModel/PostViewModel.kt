@@ -1,15 +1,10 @@
 package ru.netology.nmedia.viewModel
 
 import android.app.Application
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
-import androidx.activity.result.launch
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.myapp.SingleLiveEvent
-import ru.netology.nmedia.PostContentActivity
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.data.Post
 import ru.netology.nmedia.data.PostRepository
@@ -23,9 +18,10 @@ class PostViewModel(
 
     val data by repository::data
 
-    val navigateToPostContentScreenEvent = SingleLiveEvent<Unit>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+    val navigateToSinglePostShow = SingleLiveEvent<Post>()
     val playVideoPost = MutableLiveData<Post?>(null)
-    val currentPost = MutableLiveData<Post?>(null)
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
@@ -49,18 +45,28 @@ class PostViewModel(
         navigateToPostContentScreenEvent.call()
     }
 
+    fun getPost(postId: Int) = repository.getPost(postId)
+
     // region PostInteractionListener
 
-    override fun onLikeClicked(post: Post) = repository.like(post.id)
-    override fun onShareClicked(post: Post) = repository.shareClicked(post.id)
-    override fun onDeleteClicked(post: Post) = repository.delete(post.id)
+    override fun onLikeClicked(postId: Int) {
+        repository.like(postId)
+    }
+
+    override fun onShareClicked(postId: Int) = repository.shareClicked(postId)
+    override fun onDeleteClicked(postId: Int) = repository.delete(postId)
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentScreenEvent.call()
+        navigateToPostContentScreenEvent.value = post.content
     }
 
     override fun onPlayVideo(post: Post) {
         playVideoPost.value = post
     }
+
+    override fun onSinglePost(post: Post) {
+        navigateToSinglePostShow.value = post
+    }
+
     // endregion PostInteractionListener
 }

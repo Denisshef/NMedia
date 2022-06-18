@@ -39,7 +39,7 @@ internal class PostsAdapter(
                 setOnMenuItemClickListener { menuItem ->
                     when (menuItem.itemId) {
                         R.id.remove -> {
-                            listener.onDeleteClicked(post)
+                            listener.onDeleteClicked(post.id)
                             true
                         }
                         R.id.edit -> {
@@ -52,10 +52,11 @@ internal class PostsAdapter(
             }
 
         init {
-            binding.like.setOnClickListener { listener.onLikeClicked(post) }
-            binding.share.setOnClickListener { listener.onShareClicked(post) }
+            binding.like.setOnClickListener { listener.onLikeClicked(post.id) }
+            binding.share.setOnClickListener { listener.onShareClicked(post.id) }
             binding.videoContent.setOnClickListener { listener.onPlayVideo(post) }
             binding.buttonPlayVideo.setOnClickListener { listener.onPlayVideo(post) }
+            binding.avatar.setOnClickListener { listener.onSinglePost(post) }
             binding.optionView.setOnClickListener { popupMenu.show() }
         }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/post_view"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +8,7 @@
     android:padding="16dp">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/avatar_view"
+        android:id="@+id/avatar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:src="@drawable/ic_netology_48dp"
@@ -24,8 +25,8 @@
         android:singleLine="true"
         app:layout_constraintBottom_toTopOf="@id/date"
         app:layout_constraintEnd_toStartOf="@id/option_view"
-        app:layout_constraintStart_toEndOf="@id/avatar_view"
-        app:layout_constraintTop_toTopOf="@id/avatar_view"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
         tools:text="Android. Самая популярная ОС для мобильных приложений" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -34,7 +35,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constraintBottom_toBottomOf="@id/avatar_view"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintEnd_toEndOf="@id/author"
         app:layout_constraintStart_toStartOf="@id/author"
         app:layout_constraintTop_toBottomOf="@id/author"
@@ -55,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="avatar_view, date, option_view" />
+        app:constraint_referenced_ids="avatar, date, option_view" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/video"
