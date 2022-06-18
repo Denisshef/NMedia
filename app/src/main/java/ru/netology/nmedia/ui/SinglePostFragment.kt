@@ -32,9 +32,7 @@ class SinglePostFragment : Fragment() {
             val newSinglePost = bundle.getString(PostContentFragment.REQUEST_KEY)
                 ?: return@setFragmentResultListener
             model.onSaveButtonClicked(newSinglePost)
-
         }
-
     }
 
     override fun onCreateView(
@@ -49,16 +47,13 @@ class SinglePostFragment : Fragment() {
                 when (menuItem.itemId) {
                     R.id.remove -> {
                         model.onDeleteClicked(args.singlePost)
-                        val resultBundle = Bundle(1)
-                        resultBundle.putBoolean(KEY, true)
-                        setFragmentResult(KEY, resultBundle)
                         findNavController().popBackStack()
                         true
                     }
                     R.id.edit -> {
                         model.data.value?.find { it.id == args.singlePost }
                             ?.let { model.onEditClicked(it) }
-                        findNavController().navigate(SinglePostFragmentDirections.toSinglePostContentFragment(args.contentSinglePost))
+                        findNavController().navigate(SinglePostFragmentDirections.toSinglePostContentFragment(args.initialContent))
                         true
                     }
                     else -> false
@@ -66,19 +61,19 @@ class SinglePostFragment : Fragment() {
             }
         }
 
-        binding.render()
-
         binding.optionView.setOnClickListener{
             popupMenu.show()
         }
 
         binding.like.setOnClickListener {
             model.onLikeClicked(args.singlePost)
-            binding.render()
         }
 
         binding.share.setOnClickListener {
             model.onShareClicked(args.singlePost)
+        }
+
+        model.data.observe(viewLifecycleOwner){
             binding.render()
         }
     }.root
@@ -93,9 +88,5 @@ class SinglePostFragment : Fragment() {
         like.text = post?.amountLike.toString()
         like.isChecked = post?.clickLike ?: false
         visibility.text = post?.amountVisibility.toString()
-    }
-
-    companion object {
-        const val KEY = "singlePost"
     }
 }

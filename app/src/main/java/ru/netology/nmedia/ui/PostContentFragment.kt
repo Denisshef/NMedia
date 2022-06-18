@@ -20,10 +20,12 @@ class PostContentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = PostContentFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        if (args.initialContent != null) {
+        if (argsSingle.initialContent != null) {
+            binding.edit.setText(argsSingle.initialContent)
+        } else if (args.initialContent != null) {
             binding.edit.setText(args.initialContent)
         } else {
-            binding.edit.setText(argsSingle.contentSinglePost)
+            binding.edit.setText("")
         }
         binding.edit.requestFocus()
         binding.ok.setOnClickListener {
